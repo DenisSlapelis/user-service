@@ -16,9 +16,6 @@ export const localEnvs = {
     AWS_REGION: getEnvironmentVariable('AWS_REGION'),
     AWS_SECRET_ACCESS_KEY: getEnvironmentVariable('AWS_SECRET_ACCESS_KEY'),
 
-    // MYSQL ENVS
-    MYSQL_DATABASE_NAME: getEnvironmentVariable('MYSQL_DATABASE_NAME'),
-
     // APPLICATION ENVS
     APPLICATION_ENVIRONMENT: getEnvironmentVariable('APPLICATION_ENVIRONMENT') || 'dev',
     APPLICATION_NAME: getEnvironmentVariable('APPLICATION_NAME'),

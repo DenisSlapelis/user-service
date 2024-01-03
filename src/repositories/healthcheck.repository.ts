@@ -1,5 +1,4 @@
 import { database } from '@database';
-import { QueryTypes } from 'sequelize';
 import { injectable } from "tsyringe";
 
 @injectable()
@@ -8,10 +7,8 @@ export class HealthCheckRepository {
     }
 
     checkDatabase = async () => {
-        const [result] = await database.execute('SELECT 1 AS count', {
-            queryType: QueryTypes.SELECT
-        });
+        await database.mysql.authenticate();
 
-        return result?.count;
+        return true;
     }
 }

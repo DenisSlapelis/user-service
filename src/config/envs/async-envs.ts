@@ -8,8 +8,10 @@ export class AsyncEnvs {
     private readonly APPLICATION_NAME: string = env.getValue('APPLICATION_NAME');
     private readonly VARIABLES_FROM_AWS: Array<string> = [
         `${this.APPLICATION_NAME}/MYSQL_DATABASE_HOST`,
+        `${this.APPLICATION_NAME}/MYSQL_DATABASE_NAME`,
         `${this.APPLICATION_NAME}/MYSQL_DATABASE_PASSWORD`,
         `${this.APPLICATION_NAME}/MYSQL_DATABASE_USER`,
+        `${this.APPLICATION_NAME}/MYSQL_LOGGING_QUERIES`,
     ];
 
     constructor() {

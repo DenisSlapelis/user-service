@@ -2,17 +2,23 @@ import { DatabaseParamsDTO, DatabaseQueryOptionsDTO } from "src/dtos/database.dt
 import { Sequelize } from "sequelize";
 import { Transaction, QueryOptions, QueryTypes } from "sequelize";
 import { singleton } from "tsyringe";
+import * as logger from '@logger';
+import { UserDB } from "./models/user.database-model";
+import { env } from "@env";
 
 @singleton()
 export class Database {
-    mysqlDatabase: null | Sequelize;
+    mysql: Sequelize;
 
     constructor() {
-        this.mysqlDatabase = null;
+        this.mysql = new Sequelize({
+            dialect: 'sqlite',
+            storage: './'
+        });
     }
 
     connect = async (params: DatabaseParamsDTO) => {
-        const { host, databaseName, user, password, logging } = params;
+        const { host, databaseName, user, password } = params;
 
         if (!host || !databaseName || !user || !password)
             throw `Invalid database configs: host: ${host} | databaseName: ${databaseName} | user: ${user} | password: ${password}`;
@@ -25,21 +31,29 @@ export class Database {
                 acquire: 300000,
                 idle: 100000,
             },
-            logging: logging || false,
+            logging: env.getValue('MYSQL_LOGGING_QUERIES') == 'true' ? logger.debug : false,
         });
 
-        this.mysqlDatabase = sequelize;
+        this.mysql = sequelize;
 
-        await this.execute('SELECT 1', {
-            queryType: QueryTypes.SELECT
-        })
+        await this.mysql.authenticate().catch(err => {
+            logger.error(`SEQUELIZE ERROR ON AUTHENTICATE: ${JSON.stringify(err)}`);
+
+            throw err;
+        });
+
+        this.initializeModels();
     };
+
+    private initializeModels = () => {
+        this.mysql.define('User', UserDB, { tableName: 'users' });
+    }
 
     getTransaction = async () => {
         try {
-            return this.mysqlDatabase?.transaction();
+            return this.mysql.transaction();
         } catch (err) {
-            console.error('== Erro ao pegar transação:', err);
+            logger.error('Erro ao pegar transação:', err);
             throw err;
         }
     };
@@ -56,11 +70,11 @@ export class Database {
             if (replacements) options.replacements = replacements;
             if (logging) options.logging = logging;
 
-            const result = await this.mysqlDatabase?.query(sql, options);
+            const result = await this.mysql.query(sql, options);
 
             return result as any[];
         } catch (err) {
-            console.error('== Erro ao executar a consulta:', err);
+            logger.error('Erro ao executar a consulta:', err);
 
             if (transaction) transaction.rollback();
 
@@ -72,7 +86,7 @@ export class Database {
         if (!transaction) throw 'Transação inválida';
 
         await transaction.commit().catch((err) => {
-            console.error('== Erro ao executar commit:', err);
+            logger.error('Erro ao executar commit:', err);
             throw err;
         });
     };
@@ -81,7 +95,7 @@ export class Database {
         if (!transaction) throw 'Transação inválida';
 
         await transaction.rollback().catch((err) => {
-            console.error('== Erro ao executar rollback:', err);
+            logger.error('Erro ao executar rollback:', err);
             throw err;
         });
     };

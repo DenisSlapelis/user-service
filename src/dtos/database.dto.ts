@@ -5,7 +5,6 @@ export interface DatabaseParamsDTO {
     databaseName: string;
     user: string;
     password: string;
-    logging?: boolean | ((sql: string, timing?: number | undefined) => void);
 }
 
 export interface DatabaseQueryOptionsDTO {
