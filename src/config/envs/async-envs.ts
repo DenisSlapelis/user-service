@@ -12,6 +12,7 @@ export class AsyncEnvs {
         `${this.APPLICATION_NAME}/MYSQL_DATABASE_PASSWORD`,
         `${this.APPLICATION_NAME}/MYSQL_DATABASE_USER`,
         `${this.APPLICATION_NAME}/MYSQL_LOGGING_QUERIES`,
+        `${this.APPLICATION_NAME}/JWT_PRIVATE_KEY`,
     ];
 
     constructor() {

@@ -6,11 +6,16 @@ export class PublicRoute {
 
     constructor() {
         this.publicRoutes = {
-            '/healthcheck': 'GET'
+            '/healthcheck': 'GET',
+            '/api/v1/sys-users/login': 'POST',
         }
     }
 
     isPublicRoute = (route: string, method: string) => {
-        return this.publicRoutes[route] == method;
+        const [routeWithoutParams] = route.split('?');
+
+        const routeWithoutPathParams = routeWithoutParams.replace(/\/(\d+)/g, '/:id');
+
+        return this.publicRoutes[routeWithoutPathParams] == method;
     }
 }

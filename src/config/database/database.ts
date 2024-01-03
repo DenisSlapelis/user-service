@@ -3,18 +3,23 @@ import { Sequelize } from "sequelize";
 import { Transaction, QueryOptions, QueryTypes } from "sequelize";
 import { singleton } from "tsyringe";
 import * as logger from '@logger';
-import { UserDB } from "./models/user.database-model";
+// import { UserDB } from "./models/user.database-model";
 import { env } from "@env";
+import { SysUserDB } from "./models/sys-user.database-model";
+import { UserAddressesDB, UserAddressesDBProps } from "./models/user-addresses.database-model";
+import { UserDB, UserDBProps } from "./models/user.database-model";
 
 @singleton()
 export class Database {
     mysql: Sequelize;
+    models;
 
     constructor() {
         this.mysql = new Sequelize({
             dialect: 'sqlite',
             storage: './'
         });
+        this.models = {};
     }
 
     connect = async (params: DatabaseParamsDTO) => {
@@ -46,7 +51,18 @@ export class Database {
     };
 
     private initializeModels = () => {
-        this.mysql.define('User', UserDB, { tableName: 'users' });
+        const User = this.mysql.define<UserDB>('User', UserDBProps, { tableName: 'users', paranoid: true, underscored: true });
+        const UserAddresses = this.mysql.define<UserAddressesDB>('UserAddresses', UserAddressesDBProps, { tableName: 'user_addresses', paranoid: true, underscored: true });
+        this.mysql.define('SysUser', SysUserDB, { tableName: 'sys_users', paranoid: true, underscored: true });
+
+        // Relations
+        User.hasMany(UserAddresses, {
+            foreignKey: 'userId'
+        });
+        UserAddresses.belongsTo(User);
+
+        this.models['User'] = User;
+        this.models['UserAddresses'] = UserAddresses;
     }
 
     getTransaction = async () => {

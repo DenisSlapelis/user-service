@@ -1,41 +1,22 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, CreationOptional, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
-export interface UserDB extends Model<InferAttributes<UserDB>, InferCreationAttributes<UserDB>> {
-    id: CreationOptional<number>;
-    document: string;
-    name: string;
-    birthDate: Date;
-    active: CreationOptional<boolean>;
-    createdAt: CreationOptional<Date>;
-    createdBy: number;
-    updatedAt?: Date;
-    updatedBy?: number;
-    deletedAt?: Date;
-    deletedBy?: number;
-}
-
-export const UserDBProps = {
+export const SysUserDB = {
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
     },
-    document: {
+    username: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    name: {
+    password: {
         type: DataTypes.STRING,
-        allowNull: false,
-    },
-    birthDate: {
-        type: DataTypes.DATE,
         allowNull: false,
     },
     active: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true,
         allowNull: false,
     },
     createdAt: {

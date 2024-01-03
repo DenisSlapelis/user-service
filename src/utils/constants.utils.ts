@@ -1,0 +1,6 @@
+export enum STATUS_CODE {
+    OK = 200,
+    CREATED = 201,
+    VALIDATION_ERROR = 400,
+    SERVER_ERROR = 500,
+}

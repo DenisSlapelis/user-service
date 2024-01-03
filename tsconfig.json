@@ -45,7 +45,7 @@
       "@dtos/*": ["./src/dtos/*"],
       "@middlewares/*": ["./src/middlewares/*"],
       "@middlewares": ["./src/middlewares"],
-      "@models/*": ["./src/models/*"],
+      "@models/*": ["src/entities/*"],
       "@routes/*": ["./src/routes/*"],
       "@services/*": ["./src/services/*"],
       "@repositories/*": ["./src/repositories/*"],

@@ -1,11 +1,15 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, CreationOptional, Model } from 'sequelize';
 
-export interface UserDB extends Model<InferAttributes<UserDB>, InferCreationAttributes<UserDB>> {
+export interface UserAddressesDB extends Model<InferAttributes<UserAddressesDB>, InferCreationAttributes<UserAddressesDB>> {
     id: CreationOptional<number>;
-    document: string;
-    name: string;
-    birthDate: Date;
-    active: CreationOptional<boolean>;
+    street: string;
+    number: string;
+    complement: string;
+    neighborhood: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    userId: number;
     createdAt: CreationOptional<Date>;
     createdBy: number;
     updatedAt?: Date;
@@ -14,29 +18,49 @@ export interface UserDB extends Model<InferAttributes<UserDB>, InferCreationAttr
     deletedBy?: number;
 }
 
-export const UserDBProps = {
+export const UserAddressesDBProps = {
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
     },
-    document: {
+    street: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    name: {
+    number: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    birthDate: {
-        type: DataTypes.DATE,
+    complement: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    neighborhood: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    state: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    zipCode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    userId: {
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
     },
     active: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true,
         allowNull: false,
+        defaultValue: true,
     },
     createdAt: {
         type: DataTypes.DATE,
