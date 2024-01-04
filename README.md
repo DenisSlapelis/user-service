@@ -157,6 +157,7 @@ This will start the server and watch for any file changes, automatically restart
 
 ## Endpoints rules
 
+* All endpoints can be found [here](https://documenter.getpostman.com/view/10486183/2s9YsFFaC2).
 * Except healthcheck, all endpoints have the prefix `/api` followed by the route version, for example `/api/v1/`.
 * All endpoints require authorization, which can be passed through the `Authorization` header with a valid **JWT token** (this can be obtained by making a **POST** request on the login route with username and password).
 * The `Authorization` header is an `Bearer Token`.
@@ -169,7 +170,9 @@ This will start the server and watch for any file changes, automatically restart
 
 ## Postman
 
-[Postman Collection](docs/user-service.postman_collection.json "Collection")
+* [Online Collection](https://documenter.getpostman.com/view/10486183/2s9YsFFaC2)
+
+* [Download Collection](docs/user-service.postman_collection.json "Collection")
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
