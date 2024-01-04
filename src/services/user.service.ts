@@ -51,6 +51,8 @@ export class UserService {
             this.userAddressService.get(userId),
         ]);
 
+        if (!user) return {};
+
         const userParams = { ...user.dataValues, addresses: addresses }
 
         return new User(userParams);

@@ -8,6 +8,7 @@ export class PublicRoute {
         this.publicRoutes = {
             '/healthcheck': 'GET',
             '/api/v1/sys-users/login': 'POST',
+            '/api/v1/sys-users/': 'POST',
         }
     }
 

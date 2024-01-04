@@ -7,13 +7,17 @@ export class SysUserRepository {
     }
 
     get = async (username: string, password: string) => {
-        const result = await database.mysql.models.SysUser.findOne({
+        return database.mysql.models.SysUser.findOne({
             where: {
                 username,
                 password
             }
         });
+    }
 
-        return result;
+    create = async (username: string, password: string) => {
+        return database.mysql.models.SysUser.create({
+            username, password, createdBy: 1
+        });
     }
 }

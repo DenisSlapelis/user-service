@@ -11,9 +11,13 @@ export class SysUserService {
     login = async (username: string, password: string) => {
         const user = await this.repository.get(username, password);
 
-        if (!user) throw new Error('User not found');
+        if (!user) throw new Error('User not found', { cause: 'Not Found' });
 
         return { token: this.signToken(user) };
+    }
+
+    create = async (username: string, password: string) => {
+       return this.repository.create(username, password);
     }
 
     private signToken = (user) => {
