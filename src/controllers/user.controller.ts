@@ -21,9 +21,11 @@ export class UserController {
         this.router.get('/', this.list);
         this.router.get('/:id', this.getById);
 
-        // ** PATCH **
         // ** PUT **
+        this.router.put('/:id', this.update);
+
         // ** DELETE **
+        this.router.delete('/:id', this.delete);
     }
 
     public getRouter = (): Router => {
@@ -33,9 +35,8 @@ export class UserController {
     private create = async (req: Request, res: Response) => {
         try {
             const user = req.body;
-            const userId = req['sysUserId'];
 
-            const result = await this.service.create({ ...user, createdBy: userId });
+            const result = await this.service.create({ ...user, createdBy: req['sysUserId'] });
 
             return res.status(STATUS_CODE.CREATED).json(result);
         } catch (error: any) {
@@ -55,15 +56,45 @@ export class UserController {
         }
     }
 
+
     private getById = async (req: Request, res: Response) => {
         try {
             const userId = Number(req.params.id);
 
-            if (!userId) return res.status(STATUS_CODE.VALIDATION_ERROR).json({ message: `Invalid param 'userId'` });
+            if (!userId) return res.status(STATUS_CODE.VALIDATION_ERROR).json({ message: `Invalid param 'id'` });
 
             const result = await this.service.get(userId);
 
             return res.status(STATUS_CODE.OK).json(result);
+        } catch (error: any) {
+            return res.status(STATUS_CODE.SERVER_ERROR).json({ message: error?.message || error });
+        }
+    }
+
+    private update = async (req: Request, res: Response) => {
+        try {
+            const userId = Number(req.params.id);
+            const { body } = req;
+
+            if (!userId) return res.status(STATUS_CODE.VALIDATION_ERROR).json({ message: `Invalid param 'id'` });
+
+            const result = await this.service.update(userId, body, req['sysUserId']);
+
+            return res.status(STATUS_CODE.OK).json(result);
+        } catch (error: any) {
+            return res.status(STATUS_CODE.SERVER_ERROR).json({ message: error?.message || error });
+        }
+    }
+
+    private delete = async (req: Request, res: Response) => {
+        try {
+            const userId = Number(req.params.id);
+
+            if (!userId) return res.status(STATUS_CODE.VALIDATION_ERROR).json({ message: `Invalid param 'id'` });
+
+            await this.service.delete(userId, req['sysUserId']);
+
+            return res.status(STATUS_CODE.NO_CONTENT).json();
         } catch (error: any) {
             return res.status(STATUS_CODE.SERVER_ERROR).json({ message: error?.message || error });
         }

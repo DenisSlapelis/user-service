@@ -16,6 +16,12 @@ export interface CreateUserDTO {
     createdBy: number;
 }
 
+export interface UpdateUserDTO {
+    document: string;
+    name: string;
+    birthDate: Date;
+}
+
 export interface CreateUserAddressDTO extends AddressDTO {
     userId: number;
     createdBy: number;

@@ -1,5 +1,5 @@
 import { database } from '@database';
-import { CreateUserDTO } from '@dtos/user.dto';
+import { CreateUserDTO, UpdateUserDTO } from '@dtos/user.dto';
 import { UserAddressesDB } from 'src/config/database/models/user-addresses.database-model';
 import { UserDB } from 'src/config/database/models/user.database-model';
 import { injectable } from "tsyringe";
@@ -32,15 +32,19 @@ export class UserRepository {
         });
     }
 
-    update = async () => {
-        await database.mysql.authenticate();
-
-        return true;
+    update = async (userId: number, fields: UpdateUserDTO, updatedBy: number) => {
+        return database.models.User.update({ ...fields, updatedBy }, {
+            where: {
+                id: userId
+            }
+        });
     }
 
-    delete = async () => {
-        await database.mysql.authenticate();
-
-        return true;
+    delete = async (userId: number, deletedBy: number) => {
+        return database.models.User.update({ deletedBy, deletedAt: new Date(), active: false }, {
+            where: {
+                id: userId
+            }
+        });
     }
 }

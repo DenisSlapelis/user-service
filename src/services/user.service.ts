@@ -2,7 +2,7 @@ import { User } from '@models/user.entity';
 import { UserRepository } from '@repositories/user.repository';
 import { inject, injectable } from "tsyringe";
 import { UserAddressService } from './user-address.service';
-import { CreateUserDTO } from '@dtos/user.dto';
+import { CreateUserDTO, UpdateUserDTO } from '@dtos/user.dto';
 import { IUserAddress } from 'src/interfaces/user.interface';
 
 @injectable()
@@ -41,7 +41,7 @@ export class UserService {
         return data.map(row => {
             const user = row.dataValues;
 
-            return new User({...user, addresses: user['UserAddresses'] })
+            return new User({ ...user, addresses: user['UserAddresses'] })
         });
     }
 
@@ -56,6 +56,28 @@ export class UserService {
         const userParams = { ...user.dataValues, addresses: addresses }
 
         return new User(userParams);
+    }
+
+    update = async (userId: number, fields: UpdateUserDTO, updatedBy: number) => {
+        const user = await this.repository.get(userId);
+
+        if (!user) throw new Error('User not found', { cause: 'Validation Error' });
+
+        const { document, name, birthDate } = fields;
+
+        const newValues = { document, name, birthDate };
+
+        await this.repository.update(userId, newValues, updatedBy);
+
+        return this.get(userId);
+    }
+
+    delete = async (userId: number, deletedBy: number) => {
+        const user = await this.repository.get(userId);
+
+        if (!user) throw new Error('User not found', { cause: 'Validation Error' });
+
+        await this.repository.delete(userId, deletedBy);
     }
 
     private validCreateParams = (user: CreateUserDTO) => {
