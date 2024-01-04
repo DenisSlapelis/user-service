@@ -45,9 +45,6 @@ User microservice to Create, Read, Update and Delete Users.
     * [Database](#database)
     * [Integrations](#integrations)
     * [Folder Structure](#folder-structure)
-* [Others](#table-of-contents)
-    * [Changelog](CHANGELOG.md)
-    * [Redis Utils Commands](#redis-utils-commands)
 
 ---
 
