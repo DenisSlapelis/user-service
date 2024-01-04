@@ -9,7 +9,7 @@ import { PublicRoute } from '@routes/public-routes';
 import { Environment } from '../config/envs/environment';
 import { Database } from '../config/database/database';
 import { ParameterStore } from './parameter-store.utils';
-import { AsyncEnvs } from 'src/config/envs/async-envs';
+import { AsyncEnvs } from '../config/envs/async-envs';
 import { ConfigService } from '@services/config.service';
 import { ConfigController } from '@controllers/config.controller ';
 import { UserRepository } from '@repositories/user.repository';
@@ -47,3 +47,5 @@ export const configController = container.resolve<ConfigController>(ConfigContro
 export const sysUserController = container.resolve<SysUserController>(SysUserController);
 export const userController = container.resolve<UserController>(UserController);
 
+// Test Dependencies
+export const userRepository = container.resolve<UserRepository>(UserRepository);

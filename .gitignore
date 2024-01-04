@@ -2,3 +2,4 @@
 /node_modules
 /dist
 /tests/config/database/database.sqlite
+/coverage

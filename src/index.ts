@@ -11,8 +11,6 @@ const main = async () => {
 
     await env.populateAllEnvs();
 
-    env.getAll();
-
     await database.connect({
         databaseName: env.getValue('MYSQL_DATABASE_NAME'),
         host: env.getValue('MYSQL_DATABASE_HOST'),
