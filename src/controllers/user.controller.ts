@@ -1,5 +1,5 @@
 import { UserService } from '@services/user.service';
-import { STATUS_CODE } from '@utils/constants.utils';
+import { STATUS_CODE, STATUS_CODE_CAUSE } from '@utils/constants.utils';
 import express, { Request, Response, Router } from 'express';
 import { inject, injectable } from 'tsyringe';
 
@@ -39,7 +39,7 @@ export class UserController {
 
             return res.status(STATUS_CODE.CREATED).json(result);
         } catch (error: any) {
-            const statusCode = error.cause == 'Validation Error' ? STATUS_CODE.VALIDATION_ERROR : STATUS_CODE.SERVER_ERROR;
+            const statusCode = STATUS_CODE_CAUSE[error.cause] || STATUS_CODE.SERVER_ERROR;
 
             return res.status(statusCode).json({ message: error?.message || error });
         }
