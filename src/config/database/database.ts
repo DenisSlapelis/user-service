@@ -16,7 +16,7 @@ export class Database {
     constructor() {
         this.mysql = new Sequelize({
             dialect: 'sqlite',
-            storage: './database.sqlite'
+            storage: './tests/config/database/database.sqlite'
         });
         this.models = {};
     }
