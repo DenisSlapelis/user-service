@@ -35,7 +35,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"document\": \"123.456.789-00\",\r\n    \"name\": \"User Example\",\r\n    \"birthDate\": \"1996-12-10\",\r\n    \"addresses\": [\r\n        {\r\n            \"street\": \"street_example\",\r\n            \"number\": \"number_example\",\r\n            \"complement\": \"complement_example\",\r\n            \"neighborhood\": \"neighborhood_example\",\r\n            \"city\": \"city_example\",\r\n            \"state\": \"state_example\",\r\n            \"zipCode\": \"zipCode_example\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"document\": \"123.456.789-00\",\r\n    \"name\": \"User Example\",\r\n    \"birthDate\": \"1996-10-12\",\r\n    \"addresses\": [\r\n        {\r\n            \"street\": \"street_example\",\r\n            \"number\": \"number_example\",\r\n            \"complement\": \"complement_example\",\r\n            \"neighborhood\": \"neighborhood_example\",\r\n            \"city\": \"city_example\",\r\n            \"state\": \"state_example\",\r\n            \"zipCode\": \"zipCode_example\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -61,6 +61,67 @@
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/v1/users/:id",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/v1/users/:id",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"document\": \"000.000.000-00\",\r\n    \"name\": \"User Example 2\",\r\n    \"birthDate\": \"2000-12-12T00:00:00.000Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{apiUrl}}/api/v1/users/:id",
 							"host": [
