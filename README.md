@@ -34,6 +34,10 @@ User microservice to Create, Read, Update and Delete Users.
 ## Table of contents
 
 * [Usage documentation](#table-of-contents)
+    * [Envs](#envs)
+    * [Usage with Docker](#table-of-contents)
+        * [Prerequisites](#docker-prerequisites)
+        * [Usage](#docker-usage)
     * [Usage with Node.JS](#table-of-contents)
         * [Prerequisites](#node-prerequisites)
         * [Installation](#node-installation)
@@ -48,6 +52,48 @@ User microservice to Create, Read, Update and Delete Users.
 
 ---
 
+<a name="envs"></a>
+
+### Envs
+
+You must configure **.env** file following the [.env.example](/.env.example) template.
+Some envs come directly from the [AWS Parameter Store](https://docs.aws.amazon.com/pt_br/systems-manager/latest/userguide/systems-manager-parameter-store.html), so it is very important to have configured the **AWS_ACCESS_KEY_ID** and **AWS_SECRET_ACCESS_KEY** values ​​so that all application envs are loaded correctly.
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
+---
+
+<a name="docker-prerequisites"></a>
+
+## Docker Prerequisites
+
+To run this project with docker, ensure that you have the following items:
+
+* [Docker](https://www.docker.com/)
+* [Configured .env file](#envs)
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
+---
+
+<a name="docker-usage"></a>
+
+## Docker Usage
+
+Start the node server with the following commands:
+
+```shell
+docker compose build
+```
+
+```shell
+docker compose up -d
+```
+
+([Back to Table of contents](#table-of-contents) :arrow_up:)
+
+---
+
 <a name="node-prerequisites"></a>
 
 ## Node Prerequisites
@@ -56,14 +102,6 @@ To run this project, ensure that you have the following items:
 
 * [Node.JS](https://nodejs.org) (v20.9.0)
 * [Configured .env file](#envs)
-
-([Back to Table of contents](#table-of-contents) :arrow_up:)
-
----
-
-### Envs
-
-You must configure **.env** file following the [.env.example](/.env.example) template.
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
@@ -131,9 +169,7 @@ This will start the server and watch for any file changes, automatically restart
 
 ## Postman
 
-(WIP)
-
-[![Run in Postman](https://run.pstmn.io/button.svg)]()
+[Postman Collection](docs/user-service.postman_collection.json "Collection")
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
@@ -143,7 +179,7 @@ This will start the server and watch for any file changes, automatically restart
 
 ## Database
 
-(WIP)
+![database](docs/assets/users_db.schema.svg "Database")
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
@@ -153,7 +189,7 @@ This will start the server and watch for any file changes, automatically restart
 
 ## Integrations
 
-(WIP)
+![integrations](docs/assets/integrations.svg "Integrations")
 
 ([Back to Table of contents](#table-of-contents) :arrow_up:)
 
@@ -163,24 +199,23 @@ This will start the server and watch for any file changes, automatically restart
 
 ## Folder Structure
 
-(WIP)
-
 * `.vscode`: vscode configs.
 * `docs`: all project documentations, like scripts, diagrams, texts.
 * `src`
   * `config`: generic project configurations, like database configs, commit configs.
     * `.husky`: project validations with husky.
     * `database`: database configs.
+      * `models`: database models.
     * `envs`: local and async envs configs.
   * `controllers`: application controllers.
+  * `entities`: application entities.
+  * `interfaces`: application interfaces.
   * `dtos`: application dtos.
   * `middlewares`: application middlewares.
-  * `models`: application models.
   * `repositories`: application repositories.
   * `routes`: application routes.
     * `v1`: v1 endpoints.
   * `services`: application services.
-    * `models`: application models.
   * `utils`: common utils functions, constants, and application dependencies.
     * `logger`: logger module.
 * `tests`: project tests.
