@@ -18,6 +18,7 @@ export const SysUserDB = {
     active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: true,
     },
     createdAt: {
         type: DataTypes.DATE,

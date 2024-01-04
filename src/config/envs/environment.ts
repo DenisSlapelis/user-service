@@ -12,7 +12,9 @@ export class Environment {
   }
 
   async populateAllEnvs() {
-    const asyncEnvsResult = await asyncEnvs.getValues();
+    const isTestEnvironment = this.getValue('APPLICATION_ENVIRONMENT') == 'test';
+
+    const asyncEnvsResult = isTestEnvironment ? { JWT_PRIVATE_KEY: 'test_jwt'} : await asyncEnvs.getValues();
 
     this.envs = {
       ...asyncEnvsResult,

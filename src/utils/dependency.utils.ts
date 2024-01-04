@@ -1,3 +1,4 @@
+import "reflect-metadata"
 import { container } from 'tsyringe';
 import { AuthMiddleware } from '@middlewares/auth.middleware';
 import { HealthCheckController } from '@controllers/healthcheck.controller';

@@ -3,7 +3,6 @@ import { Sequelize } from "sequelize";
 import { Transaction, QueryOptions, QueryTypes } from "sequelize";
 import { singleton } from "tsyringe";
 import * as logger from '@logger';
-// import { UserDB } from "./models/user.database-model";
 import { env } from "@env";
 import { SysUserDB } from "./models/sys-user.database-model";
 import { UserAddressesDB, UserAddressesDBProps } from "./models/user-addresses.database-model";
@@ -17,13 +16,15 @@ export class Database {
     constructor() {
         this.mysql = new Sequelize({
             dialect: 'sqlite',
-            storage: './'
+            storage: './database.sqlite'
         });
         this.models = {};
     }
 
     connect = async (params: DatabaseParamsDTO) => {
         const { host, databaseName, user, password } = params;
+
+        if (env.getValue('APPLICATION_ENVIRONMENT') == 'test') return this.setupLocalDatabase();
 
         if (!host || !databaseName || !user || !password)
             throw `Invalid database configs: host: ${host} | databaseName: ${databaseName} | user: ${user} | password: ${password}`;
@@ -63,6 +64,12 @@ export class Database {
 
         this.models['User'] = User;
         this.models['UserAddresses'] = UserAddresses;
+    }
+
+    private async setupLocalDatabase() {
+        this.initializeModels();
+
+        await this.mysql.sync({ force: true });
     }
 
     getTransaction = async () => {
